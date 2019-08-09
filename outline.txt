@@ -1,0 +1,45 @@
+multithreading
+
+different matrix 
+
+back end: API + database
+
+The other project
+
+create table TESTBLOB(framenum int not null, feature blob not null);
+
+
+For restriction on restaurant number limit 
+with restaurants_all.py get as many restaurants attributes as possible
+1.Find restaurants in Manhattan, Brooklyn, Bronx, Queens, Staten Island (5*1000)
+2.Filter according to price $,$$,$$,$$$,$$$$  4times
+3.Best match and sort by rating, but popularity *3
+
+total: 5*1000*4*3 = 6w records
+then remove duplicates
+
+restaurants_list length: 47379
+restaurants_unique length: 29356
+keep only qualified restaurants: 27272
+
+original there are 299 categories, now refine and become 216 categories
+
+#drop all unqualified destinations
+restaurants = restaurants[restaurants.qualified == 1]
+print(restaurants.count())
+204000
+
+onehot_categories = restaurants.categories.str.join('|').str.get_dummies().add_prefix('category_')
+print(onehot_categories.columns)
+Index(['category_acaibowls', 'category_afghani', 'category_african',
+       'category_arabian', 'category_arcades', 'category_argentine',
+       'category_armenian', 'category_asianfusion', 'category_australian',
+       'category_austrian',
+       ...
+       'category_turkish', 'category_tuscan', 'category_uzbek',
+       'category_vegan', 'category_vegetarian', 'category_venezuelan',
+       'category_vietnamese', 'category_waffles', 'category_wine_bars',
+       'category_wraps'],
+      dtype='object', length=193)
+
+reduce to 50 dimension

@@ -1,0 +1,27 @@
+
+{"businesses": 
+    [{"id": "ZN6zUZCfG3gMjtr1h3r9Qg", 
+    "alias": "board-walk-bagel-and-delicatessen-rockaway-park",
+    "name": "Board Walk Bagel & Delicatessen", 
+    "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/dbU-RmfASEHLE2lnF9yCEw/o.jpg", 
+    "is_closed": False, 
+    "url": "https://www.yelp.com/biz/board-walk-bagel-and-delicatessen-rockaway-park?adjust_creative=v5s9e6q31PPTIr0IFP5wxQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=v5s9e6q31PPTIr0IFP5wxQ", 
+    "review_count": 47, 
+    "categories": [{"alias": "bagels", "title": "Bagels"}, {"alias": "delis", "title": "Delis"}], 
+    "rating": 3.0, 
+    "coordinates": {"latitude": -73.829808, "longitude": 40.581468}, 
+    "transactions": [], 
+    "price": "$",
+    "location": {"address1": "108-01 108th St", "address2": "", "address3": "", "city": "Rockaway Park", "zip_code": "11694", "country": "US", "state": "NY", 
+        "display_address": ["108-01 108th St", "Rockaway Park, NY 11694"]}, 
+    "phone": "+17186343200", 
+    "display_phone": "(718) 634-3200", 
+    "distance": 1491.074235749697}], 
+"total": 1, 
+"region": {"center": {"longitude": 40.693898, "latitude": -73.983991}}
+}
+
+
+
+
+

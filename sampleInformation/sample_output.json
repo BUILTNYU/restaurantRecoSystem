@@ -1,0 +1,18 @@
+
+[
+    {"name": "French Louie", "price": "$$", "review_count": 345, "rating": 4.0, 
+        "categories": [{"alias": "french", "title": "French"}], 
+        "phone": "+17189351200", "display_phone": "(718) 935-1200", 
+        "location": "320 Atlantic Ave", "coordinates": {"latitude": 40.6879459, "longitude": -73.988257}, 
+        "distance": 739.5741341844115}, 
+    {"name": "Dining Room", "price": "$$", "review_count": 67, "rating": 3.5, 
+        "categories": [{"alias": "newamerican", "title": "American (New)"}, {"alias": "bars", "title": "Bars"}], 
+        "phone": "+17184888902", "display_phone": "(718) 488-8902", 
+        "location": "56 Willoughby St", "coordinates": {"latitude": 40.6920793, "longitude": -73.9866257}, 
+        "distance": 279.13316779066105}, 
+    {"name": "A Taste of Katz's", "price": "$$", "review_count": 101, "rating": 3.0, 
+        "categories": [{"alias": "delis", "title": "Delis"}, {"alias": "sandwiches", "title": "Sandwiches"}],
+        "phone": "+12122542246", "display_phone": "(212) 254-2246", 
+        "location": "445 Albee Square W", "coordinates": {"latitude": 40.6912509, "longitude": -73.9832589}, 
+        "distance": 343.80551495184034}
+]

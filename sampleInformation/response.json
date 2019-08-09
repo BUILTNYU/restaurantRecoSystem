@@ -1,0 +1,117 @@
+1. success: retrieve three restaurants(sometimes is there is not enough restaurants, maybe only 1 or 2)
+Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior+1231241412+12:06+-73.984345+40.693899+500+1", redirected: false, status: 200, ok: true, …}
+bodyUsed: true
+headers: Headers {}
+ok: true
+redirected: false
+status: 200
+statusText: "OK"
+type: "cors"
+url: "http://localhost:8000/getRecommendation:senior+1231241412+12:06+-73.984345+40.693899+500+1"
+body:{
+    "success": [
+      {
+        "categories": [
+          {
+            "alias": "sandwiches", 
+            "title": "Sandwiches"
+          }, 
+          {
+            "alias": "desserts", 
+            "title": "Desserts"
+          }
+        ], 
+        "coordinates": {
+          "latitude": 40.7158, 
+          "longitude": -73.99169
+        }, 
+        "display_phone": "(646) 504-8132", 
+        "distance": 2502.9117980819724, 
+        "id": "gHdejB1Mx2P5UjAgZ6BT2w", 
+        "location": "35 Orchard St", 
+        "name": "Cheeky Sandwiches", 
+        "phone": "+16465048132", 
+        "price": "$", 
+        "rating": 4.5, 
+        "recommendation_time": "2019-08-07 12:08:15", 
+        "review_count": 1118
+      }, 
+      {
+        "categories": [
+          {
+            "alias": "falafel", 
+            "title": "Falafel"
+          }, 
+          {
+            "alias": "egyptian", 
+            "title": "Egyptian"
+          }, 
+          {
+            "alias": "sandwiches", 
+            "title": "Sandwiches"
+          }
+        ], 
+        "coordinates": {
+          "latitude": 40.670295715332, 
+          "longitude": -73.9790954589844
+        }, 
+        "display_phone": "(718) 768-4961", 
+        "distance": 2661.7532896052808, 
+        "id": "QZcRSVUltJ6YreTeDx52lQ", 
+        "location": "226 7th Ave", 
+        "name": "Mr Falafel", 
+        "phone": "+17187684961", 
+        "price": "$", 
+        "rating": 4.0, 
+        "recommendation_time": "2019-08-07 12:08:15", 
+        "review_count": 184
+      }, 
+      {
+        "categories": [
+          {
+            "alias": "chinese", 
+            "title": "Chinese"
+          }, 
+          {
+            "alias": "hkcafe", 
+            "title": "Hong Kong Style Cafe"
+          }
+        ], 
+        "coordinates": {
+          "latitude": 40.71725, 
+          "longitude": -73.99254
+        }, 
+        "display_phone": "(212) 966-8269", 
+        "distance": 2687.6984035164082, 
+        "id": "agCuWjaUJ8xBO_PDDQRiGw", 
+        "location": "85 Eldridge St Lower E", 
+        "name": "S Wan Cafe \u6d0b\u7d2b\u8346", 
+        "phone": "+12129668269", 
+        "price": "$", 
+        "rating": 4.5, 
+        "recommendation_time": "2019-08-07 12:08:15", 
+        "review_count": 117
+      }
+    ]
+  }
+
+  
+
+
+
+
+2.error: because the distance or price restriction is too tight, none of the restaurants satisfy the requirement
+Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior+1231241412+12:08+-73.984345+40.693899+1+1", redirected: false, status: 200, ok: true, …}
+body: (...)
+bodyUsed: true
+headers: Headers {}
+ok: true
+redirected: false
+status: 200
+statusText: "OK"
+type: "cors"
+url: "http://localhost:8000/getRecommendation:senior+1231241412+12:08+-73.984345+40.693899+1+1"
+body:{
+"error": "please relax restrictions of radius or price prference"
+}
+

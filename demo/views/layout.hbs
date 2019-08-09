@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+		<head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width" />
+            <link href="style.css" rel="stylesheet">
+            <title>DEMO</title>
+		</head>
+    <body>
+      <div id = "information-box">
+          <div align="center" style="margin-top:5%">User Information</div>
+          <div id = "information">
+              <span>user id: </span><input type="text" id = "user_id" value = "1231241412"><br>
+              <span>longitude: </span><input type="text" id = "longitude" value="-73.984345"><br>
+              <span>latitude: </span><input type="text" id = "latitude" value="40.693899"><br>
+              <span>radius: </span><input type="range" min= "1" max = "2000" value = "500" id = "radius"> <span id="show-radius" ></span><br>
+              <span>price: </span> <select id ="price">
+                  <option value="1">$</option>
+                  <option value="2">$$</option>
+                  <option value="3">$$$</option>
+                  <option value="4">$$$$</option>
+              </select> <br>
+          </div>
+          <div id="map"></div>
+          <button id = "recommend" >Recommend</button>
+          <input style="visibility:hidden">
+      </div>
+      <div id = "recommendation-box">
+        <div align="center" style="margin-top:5%">Recommendations</div>
+      </div>
+      <div id = "database-box" style="position:absolute">
+          <div align="center" style="margin-top:5%">History</div>
+          <div id="history-box">{{{body}}}</div>
+          
+      </div>
+
+    </body>
+    <script src="javascript.js"></script>
+    <script>
+      var map;
+      function initMap() {
+        node_lng = document.getElementById("longitude")
+        longitude = parseFloat(node_lng.value);
+        node_lat = document.getElementById("latitude")
+        latitude = parseFloat(node_lat.value);
+        var position = {lat: latitude, lng: longitude}
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: position,
+          zoom: 15
+        });
+        var marker = new google.maps.Marker({position: position, map: map});
+        var infowindow = new google.maps.InfoWindow({
+          content: 'Latitude: ' + position.lat +
+            '<br>Longitude: ' + position.lng
+        });
+        infowindow.open(map,marker);
+        google.maps.event.addListener(map,"click",function(event){
+          marker.setPosition(event.latLng)
+          node_lng.value = event.latLng.lng();
+          node_lat.value = event.latLng.lat();
+          infowindow.setContent = 'Latitude: ' + node_lat.value +
+            '<br>Longitude: ' +  node_lng.value
+        })
+
+
+      }
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkljFOeUdvx50FgRZIOSlstfGQ_Kn3TlY&language=en&callback=initMap"></script>
+    
+
+</html>

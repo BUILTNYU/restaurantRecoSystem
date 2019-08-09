@@ -1,0 +1,92 @@
+body{
+    display: block;
+    padding:5%;
+    padding-left:10%
+}
+#information-box{
+    position: fixed;
+    display:inline-block;
+    border: 1px solid black;
+    height:500px;
+    width:300px; /* Could be more or less, depending on screen size */
+}
+
+#information{
+    position:absolute;
+    padding:5%;
+    height:200px;
+}
+
+#map {
+    position: absolute;
+    top:160px;
+    /* padding:5%; */
+    /* margin-left: auto; */
+    border: 1px solid black;
+    height: 200px;
+    width: 299px;
+  } 
+
+#recommend{
+    position: absolute;
+    border: 1px solid black;
+    left:100px;
+    top: 400px; 
+}
+#recommendation-box {
+    position: fixed;
+    display:inline-block;
+    left:470px;
+    border: 1px solid black;
+    height:500px;
+    width: 300px; /* Could be more or less, depending on screen size */
+}
+
+.recommendation-result{
+    display: block;
+    margin:auto;
+    border: 1px solid black;
+    height: 110px;
+    width:260px;
+    margin-top: 15px;
+    /* position: absolute; */
+    
+}
+.recommendation-result button{
+    margin-left:5%;
+}
+#database-box {
+    position: fixed;
+    display:inline-block;
+    left:800px;
+    border: 1px solid black;
+    height:500px;
+    width: 300px; /* Could be more or less, depending on screen size */
+    overflow: scroll;
+}
+#history-box{
+    
+}
+
+#history {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#history td, #history th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#history tr:nth-child(even){background-color: #f2f2f2;}
+
+#history  tr:hover {background-color: #ddd;}
+
+#history  th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+

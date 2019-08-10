@@ -39,8 +39,6 @@ function like(event,user_id,restaurant_id,recommendation_time){
 
   fetch(url,{mode: 'cors',headers:{'Access-Control-Allow-Origin':'*' }})
     .then(function(response){
-      console.log(response)
-      console.log(response.json)
     })
     .catch(error => console.log('Error:', error));
 }

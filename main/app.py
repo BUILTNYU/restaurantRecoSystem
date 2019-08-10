@@ -19,7 +19,7 @@ conn = pymysql.connect(host='localhost',
                     port = 8889,
                     user='root',
                     password='root',
-                    db='UrbanConnector',
+                    db='UrbanConnectorCache',
                     charset='utf8mb4',
                     cursorclass=pymysql.cursors.DictCursor)
 
@@ -30,6 +30,21 @@ start_time = datetime(2019, 8, 2, 5, 00, 00)
 scheduler.add_job(main.update_database, "interval", days=1, start_date=start_time, args=[conn])
 scheduler.start()
 
+# make recommendations for breakfast and brunch at 9am NY Time
+scheduler = BackgroundScheduler()
+start_time = datetime(2019, 8, 2, 9, 00, 00)
+scheduler.add_job(main.update_database, "interval", days=1, start_date=start_time, args=[conn])
+scheduler.start()
+# make recommendations for brunch and lunch at 11am NY Time
+scheduler = BackgroundScheduler()
+start_time = datetime(2019, 8, 2, 11, 00, 00)
+scheduler.add_job(main.update_database, "interval", days=1, start_date=start_time, args=[conn])
+scheduler.start()
+# make recommendations for dinner at 4pm NY Time
+scheduler = BackgroundScheduler()
+start_time = datetime(2019, 8, 2, 16, 00, 00)
+scheduler.add_job(main.update_database, "interval", days=1, start_date=start_time, args=[conn])
+scheduler.start()
 
 
 __ALPHA__ = 1
@@ -46,11 +61,11 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
     price = int(price)
     return main.make_recommendation(user_profile, user_id, local_time, longitude, latitude, radius, price, __ALPHA__, conn)
 
-@app.route('/feedback:<user_profile>+<user_id>+<local_time>+<restaurant_id>+<recommendation_time>+<reward>',methods=['GET'])
-def feedback(user_profile, user_id, local_time, restaurant_id, recommendation_time, reward):
+@app.route('/feedback:<user_profile>+<user_id>+<time>+<restaurant_id>+<recommendation_time>+<reward>',methods=['GET'])
+def feedback(user_profile, user_id, time, restaurant_id, recommendation_time, reward):
     # reward = int(reward)
     reward = float(reward)
-    main.update_reward(user_profile, user_id, local_time, restaurant_id, recommendation_time, reward, __ALPHA__, conn)
+    main.update_reward(user_profile, user_id, time, restaurant_id, recommendation_time, reward, __ALPHA__, conn)
     response = make_response(jsonify({"statusCode": 200}))
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'OPTIONS,HEAD,GET,POST'

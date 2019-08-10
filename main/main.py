@@ -86,15 +86,29 @@ def update_database(conn):
     cursor = conn.cursor()
     # delete recommendation made before 7 days
     # query = "DELETE FROM RecommendationsSevenDays WHERE recommendation_time < (NOW() - INTERVAL 1 second)"
-    
+
     """------database modification------"""
     query = "DELETE FROM RecommendationsSevenDays WHERE recommendation_time < (NOW() - INTERVAL 7 DAY)"
     cursor.execute(query)
     conn.commit()
     """------database modification------"""
 
+
+
+def cache_recommendations(user_profile, local_time, time_zone, conn):
+    cursor = conn.cursor()
+    query_user = "SELECT DISTINCT user_id,time_zone from Users where time_zone=%s"
+    cursor.execute(query_user,(time_zone))
+    all_users_timezone = cursor.fetchall()
+    all_users_timezone = list(map(lambda x:x["user_id"], all_users_timezone))
+    for user in all_users_timezone:
+        make_recommendation(user_profile, user_id, local_time, longitude, latitude, radius, price, alpha, conn, cache=False)
+
+
+
+
 # make three predictions
-def make_recommendation(user_profile, user_id, local_time, longitude, latitude, radius, price, alpha, conn):
+def make_recommendation(user_profile, user_id, local_time, longitude, latitude, radius, price, alpha, conn, cache=False):
     cursor = conn.cursor()
     # get all restaurants recommended in recent 7 days
     # avoid making them again
@@ -113,23 +127,12 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
 
     # there are too no restaurants available because the radius is too small or the price preference is very strict
     if len(restaurants) == 0:
-        return json.dumps({"error":"please relax restrictions of radius or price prference: no restaurants available"})
+        return json.dumps({"error":"please relax restrictions of radius or price prference"})
 
-    # convert the text data to feature matrix  
-    # try:
-    #     context_pool = featureExtraction(restaurants)
-    #     context_size = len(context_pool[0])-1 # remove arm
-    #     id2context = {}
-    # except:
-    #     return json.dumps({"error":"please relax restrictions of radius or price prference: no qualified restaurants available"})
-    try:
-        context_pool = featureExtraction(restaurants)
-        context_size = len(context_pool[0])-1 # remove arm
-        id2context = {}
-
-    except:
-        return json.dumps({"error":"no qualified destinations"})
-
+    # convert the text data to feature matrix
+    context_pool = featureExtraction(restaurants)
+    context_size = len(context_pool[0])-1 # remove arm
+    id2context = {}
 
     # record the context information
     for each in context_pool:
@@ -147,7 +150,7 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
 
     """------database modification------"""
     query0 = 'INSERT INTO `AllRecommendations`(`user_id`, `restaurant_id`, `recommendation_time`,`context`,`local_time`) VALUES (%s,%s,%s,%s,%s)'
-    query1 = 'INSERT INTO `RecommendationsSevenDays`(user_id, restaurant_id, recommendation_time) VALUES (%s,%s,%s)'
+    query1 = 'INSERT INTO `RecommendationsSevenDays`(user_id, restaurant_id, recommendation_time, restaurant_info, used) VALUES (%s,%s,%s,%s,0)'
     """------database modification------"""
 
     for each in predictions:
@@ -162,18 +165,6 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
 
             context = json.dumps(id2context[each]) 
 
-            """------database modification------"""
-            # first: update the database for all recommendations  
-            # this has to be made ealier than the second one, because there are the primary key 
-            cursor.execute(query0, (user_id, each, CURRENT_TIME, context, local_time))
-
-            # update the database for the past 7 days storage
-            cursor.execute(query1, (user_id, each, CURRENT_TIME))
-            
-            # they have to use the same user_id,each, current_time because they are key and are referencing each other
-            conn.commit()
-            """------database modification------"""
-
             restaurant = list(filter(lambda x:x["id"]==each, restaurants))[0]
             restaurant_info = {"name":restaurant["name"],
             'id': restaurant["id"],
@@ -187,6 +178,20 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
             "coordinates": restaurant["coordinates"],
             'distance': restaurant['distance'],
             'recommendation_time': CURRENT_TIME}
+
+            if cache == False:
+                """------database modification------"""
+                # first: update the database for all recommendations  
+                # this has to be made ealier than the second one, because there are the primary key 
+                cursor.execute(query0, (user_id, each, CURRENT_TIME, context, local_time))
+
+                # update the database for the past 7 days storage
+                cursor.execute(query1, (user_id, each, CURRENT_TIME, json.dumps(restaurant_info)))
+                
+                # they have to use the same user_id,each, current_time because they are key and are referencing each other
+                conn.commit()
+                """------database modification------"""
+
             output.append(restaurant_info)
             # the recommendation_time has to be returned and used for update the feedback 
             # this is part of the primary key
@@ -209,20 +214,6 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
 
                 context = json.dumps(id2context[each]) 
 
-                """------database modification------"""
-                # first: update the database for all recommendations  
-                # this has to be made ealier than the second one, because there are the primary key 
-                print("fixme",query0%(user_id,each,CURRENT_TIME,context,local_time))
-                cursor.execute(query0,(user_id,each,CURRENT_TIME,context,local_time))
-
-                # update the database for the past 7 days storage
-                print("fixme",query1%(user_id,each,CURRENT_TIME))
-                cursor.execute(query1,(user_id,each,CURRENT_TIME))
-                
-                # they have to use the same user_id,each, current_time because they are key and are referencing each other
-                conn.commit()
-                """------database modification------"""
-
                 restaurant = list(filter(lambda x: x["id"] == each, restaurants))[0]
                 restaurant_info = {"name":restaurant["name"],
                 'id': restaurant["id"],
@@ -237,6 +228,20 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
                 'distance': restaurant['distance'],
                 'recommendation_time': CURRENT_TIME}
                 output.append(restaurant_info)
+
+                if cache == False:
+                    """------database modification------"""
+                    # first: update the database for all recommendations  
+                    # this has to be made ealier than the second one, because there are the primary key 
+                    cursor.execute(query0, (user_id, each, CURRENT_TIME, context, local_time))
+
+                    # update the database for the past 7 days storage
+                    cursor.execute(query1, (user_id, each, CURRENT_TIME, json.dumps(restaurant_info)))
+                    
+                    # they have to use the same user_id,each, current_time because they are key and are referencing each other
+                    conn.commit()
+                    """------database modification------"""
+
                 # the recommendation_time has to be returned and used for update the feedback 
                 # this is part of the primary key
 
@@ -245,37 +250,34 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
 def update_reward(user_profile, user_id, local_time, restaurant_id, recommendation_time, reward, alpha, conn):
     cursor = conn.cursor()
 
-    # try: 
-    """------database modification------"""
-    query = "SELECT context FROM AllRecommendations where user_id = %s and restaurant_id = %s and recommendation_time = %s"
-    print("fixme",query%(user_id, restaurant_id, recommendation_time))
-    cursor.execute(query, (user_id, restaurant_id, recommendation_time))
-    a = cursor.fetchone()
-    context = json.loads(a["context"])
+    try: 
+        """------database modification------"""
+        query = "SELECT context FROM AllRecommendations where user_id = %s and restaurant_id = %s and recommendation_time = %s"
+        cursor.execute(query, (user_id, restaurant_id, recommendation_time))
+        a = cursor.fetchone()
+        context = json.loads(a["context"])
 
-    #store this feedback to UserRating
-    query = "INSERT INTO UserRating(user_id,restaurant_id,recommendation_time,user_selection_time,reward) VALUES(%s,%s,%s,CURRENT_TIMESTAMP,%s)"
-    cursor.execute(query, (user_id, restaurant_id, recommendation_time, reward))
-    print("fixme",query%(user_id, restaurant_id, recommendation_time,reward))
-    conn.commit()
-    """------database modification------"""
+        #store this feedback to UserRating
+        query = "INSERT INTO UserRating(user_id,restaurant_id,recommendation_time,user_selection_time,reward) VALUES(%s,%s,%s,CURRENT_TIMESTAMP,%s)"
+        cursor.execute(query, (user_id, restaurant_id, recommendation_time, reward))
+        conn.commit()
+        """------database modification------"""
 
-    result = [reward, restaurant_id, context]
+        result = [reward, restaurant_id, context]
 
-    A, b = get_matrices(user_profile, local_time)
-    # A and b both have three matrices, one for morning, one for afternoon and one for evening
-    # now, get the matrices according to time 
-    # if there is no matrcies stored, then start  with None
+        A, b = get_matrices(user_profile, local_time)
+        # A and b both have three matrices, one for morning, one for afternoon and one for evening
+        # now, get the matrices according to time 
+        # if there is no matrcies stored, then start  with None
 
-    A, b, _ = linUCB(A, b, [result], [], alpha, len(context)) #it's learning 
-    save_matrices(user_profile, A, b, local_time)
-    
-    return 200
+        A, b, _ = linUCB(A, b, [result], [], alpha, len(context)) #it's learning 
+        save_matrices(user_profile,A, b, local_time)
+        return 200
     # extreme case: the database is shut down, all records in table AllRecommendations get lost
     # when user make a selection and try to match it with the previous context, failed
-    # except:
-    #     print("Try to insert a record, but doesn't conform to the foreign key policy")
-    #     return 500
+    except:
+        print("Try to insert a record, but doesn't conform to the foreign key policy")
+        return 500
 
 
 
@@ -286,7 +288,7 @@ if __name__ == "__main__":
                         port = 8889,
                         user='root',
                         password='root',
-                        db='UrbanConnector',
+                        db='UrbanConnectorCache',
                         charset='utf8mb4',
                         cursorclass=pymysql.cursors.DictCursor)
 

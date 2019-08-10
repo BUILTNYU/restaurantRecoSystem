@@ -17,7 +17,7 @@ positive = ['acaibowls', 'afghani', 'african','arabian', 'arcades', 'argentine',
     'cabaret', 'cafes', 'cafeteria', 'cajun', 'cambodian', 'cantonese', 'caribbean', 
     'catering',  'cheese', 'cheesesteaks', 'chicken_wings', 'chickenshop', 'chinese', 
     'chocolate',  'colombian', 'comfortfood', 'creperies', 'cuban', 'culturalcenter',  
-    'czech', 'delis', 'desserts', 'dimsum', 'diners', 'dinnertheater', 'distilleries','diyfood', 
+    'czech''delis', 'desserts', 'dimsum', 'diners', 'dinnertheater', 'distilleries','diyfood', 
     'dominican', 'donuts',  'egyptian', 'empanadas', 'eritrean', 'ethiopian', 'falafel', 'farmersmarket', 
     'filipino', 'fishnchips',  'fondue', 'food', 'food_court', 'fooddeliveryservices', 'foodstands', 
     'foodtrucks', 'french', 'gamemeat', 'gastropubs', 'gelato', 'georgian', 'german',  
@@ -40,9 +40,9 @@ positive = ['acaibowls', 'afghani', 'african','arabian', 'arcades', 'argentine',
 #decide if this destination qualify our criteria
 def qualify(array, positive_words):
   for each in array:
-    if each in positive_words:
-      return 1
-  return 0
+    if each not in positive_words:
+      return 0
+  return 1
 
 #make sure that all different data pool will have the same number of categories
 def addColumns(table, current_categories,positive):
@@ -53,6 +53,7 @@ def addColumns(table, current_categories,positive):
 
 def featureExtraction(data):
     restaurants = pd.DataFrame.from_records(data)
+
     # PRICE2NUM = {"$":1,"$$":2,"$$$":3,"$$$$":4,"£":1,"££":2,'£££':3,'££££':4}
    
     #make sure that all the values in the price columns are valid

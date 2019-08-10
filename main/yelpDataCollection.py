@@ -82,7 +82,7 @@ def request(host, path, api_key, url_params=None):
         'Authorization': 'Bearer %s' % api_key,
     }
 
-    response = requests.request('GET', url, headers=headers, params=url_params,timeout = 10)
+    response = requests.request('GET', url, headers=headers, params=url_params,timeout = 5)
     # print("net response time",requests.request('GET', url, headers=headers, params=url_params).elapsed.total_seconds())
     
 

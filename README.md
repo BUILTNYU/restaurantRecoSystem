@@ -1,6 +1,15 @@
+# In Development
+
 ## Background 
 
 Contextual bandit algorithm makes use of context and user information to make personalized recommendation from dynamically changings pool of candidates. It sequentially selects destinations for users and receives feedback to adjust its selection strategy, which both exploiting and exploring their preferences. We implemented the LinUCB algorithm proposed by Li(2010) to implement the restaurant recommendation algorithm.
+
+## Cache Version 
+
+This version aims to reduce the response time of our services by caching the recommendation results. Compared to the standard version, the cache version will make recommendations in our back-end and store the results in database. Once the user request the services, the program will first see whether the cached recommendations can directly be used. If the users has updated their preference, the program has to make recommendations one more time and respond with newly updated results.
+
+The database setup is a little different from the standard version, and the program will check if the recommendations hourly.
+
 
 ## SETUP
 ### 1. Notice:

@@ -5,7 +5,7 @@ Contextual bandit algorithm makes use of context and user information to make pe
 ## SETUP
 ### 1. Notice:
 
-1. Please keep of positive word array in "preprocessing/pca_model_training.py","preprocessing/data_stimulation.py/","main/featureExtraction.py" consistent
+1. Please keep of positive word array in "preprocessing/pca_model_training.py", "preprocessing/data_stimulation.py/", "main/featureExtraction.py" consistent
 
 ### 2. Configuration File:
 
@@ -16,7 +16,7 @@ api_key = <your api key>
 client_id = <your client id>
 app_name = <the name of your app>
 ```
-2. Remove all current data files under `main/model/`(they are user matrices and will be generated again)
+2. Remove all current data files under `main/model/`(they are user matrices and will be generated again according to your training input)
 
 ### 3. Database Setup:
 

@@ -16,7 +16,7 @@ api_key = <your api key>
 client_id = <your client id>
 app_name = <the name of your app>
 ```
-2. Remove all current data files under `main/model/`(they will be generated again)
+2. Remove all current data files under `main/model/`(they are user matrices and will be generated again)
 
 ### 3. Database Setup:
 

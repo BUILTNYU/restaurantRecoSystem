@@ -1,4 +1,5 @@
 main/config.py
+main/model/*
 __pycache__
 .ipynb_checkpoints
 demo/node_modules

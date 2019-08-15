@@ -328,8 +328,8 @@ __proto__: Response
 
 2. Change the database setting in the "[/demo/demo.js](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/0b79cc108f2d8b118469dad4ca88513faf9f65c2/demo/demo.js#L5-L11)" file
 
-2. Start the program by running `nodemon demo.js` unser the folder "/demo"
+3. Start the program by running `nodemon demo.js` unser the folder "/demo"
 
-3. Enter "localhost:3000" in you browser.
+4. Enter "localhost:3000" in you browser.
 
 

@@ -94,7 +94,7 @@ To install the dependencies, run: `pip install -r requirements.txt`
 
 ### 5. Start the Program:
 
-To start the web services, run under main folder `python app.py`
+To start the web services, run under main folder `python app.py` or `python main.py`
 
 
 ## Descriptions

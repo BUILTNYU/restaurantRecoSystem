@@ -94,6 +94,8 @@ To install the dependencies, run: `pip install -r requirements.txt`
 
 ### 5. Start the Program:
 
+First, make sure you have started your MySQL database
+
 To start the web services, run under main folder `python app.py`( or `python main.py` locally in your terminal without webservice)
 
 
@@ -328,7 +330,7 @@ __proto__: Response
 
 2. Change the database setting in the "[/demo/demo.js](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/0b79cc108f2d8b118469dad4ca88513faf9f65c2/demo/demo.js#L5-L11)" file
 
-3. Start the API service by running `python app.py` under folder "/main"
+3. Start your MySQL database and then the API service by running `python app.py` under folder "/main"
 
 4. Start the demo program by running `nodemon demo.js` unser the folder "/demo"
 

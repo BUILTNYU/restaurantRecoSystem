@@ -100,7 +100,7 @@ To start the web services, run under main folder `python app.py`( or `python mai
 
 ### 6. Expected output:
 
-### 7.Demo Website (Optional):
+### 7. Demo Website (Optional):
 
 1. Under folder "/demo/", run `npm install`
 

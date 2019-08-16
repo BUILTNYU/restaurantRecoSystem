@@ -132,7 +132,7 @@ you can run it directly to see results of an offline evaluation
 1. Get recommendations -> return three restaurants(sometimes less than 3 options because there are not enough restaurants)
 
 ```
-@app.route('/getRecommendation:<user_profile>+<user_id>+<local_time>+<longitude>+<latitude>+<radius>+<price>', methods=['GET'])
+@app.route('/getRecommendation:<user_profile>&<user_id>&<local_time>&<longitude>&<latitude>&<radius>&<price>', methods=['GET'])
 def getRecommendation(user_profile, user_id, time, longitude, latitude, radius, price):
 # user_profile: string, eg: 'senior'
 # user_id: string, eg:'123124'
@@ -145,12 +145,12 @@ def getRecommendation(user_profile, user_id, time, longitude, latitude, radius, 
 
 sample request:
 ```
-"GET /getRecommendation:senior+1231241412+2019-08-07T23:44:16-04:00+-73.984345+40.693899+2000+1 HTTP/1.1" 200 -
+"GET /getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&2000&1 HTTP/1.1" 200 -
 ```
 sample response:
 ```
 1. success: retrieve three restaurants(sometimes is there is not enough restaurants, maybe only 1 or 2)
-Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior+1231241412+12:06+-73.984345+40.693899+500+1", redirected: false, status: 200, ok: true, …}
+Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&2000&1", redirected: false, status: 200, ok: true, …}
 bodyUsed: true
 headers: Headers {}
 ok: true
@@ -158,7 +158,7 @@ redirected: false
 status: 200
 statusText: "OK"
 type: "cors"
-url: "http://localhost:8000/getRecommendation:senior+1231241412+12:06+-73.984345+40.693899+500+1"
+url: "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&2000&1"
 body:{
     "success": [
       {
@@ -247,7 +247,7 @@ body:{
   }
   
 2.error: because the distance or price restriction is too tight, none of the restaurants satisfy the requirements in Yelp API
-Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior+1231241412+12:08+-73.984345+40.693899+1+1", redirected: false, status: 200, ok: true, …}
+Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&1&1", redirected: false, status: 200, ok: true, …}
 body: (...)
 bodyUsed: true
 headers: Headers {}
@@ -256,13 +256,13 @@ redirected: false
 status: 200
 statusText: "OK"
 type: "cors"
-url: "http://localhost:8000/getRecommendation:senior+1231241412+12:08+-73.984345+40.693899+1+1"
+url:  "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&1&1"
 body:{
 "error": "please relax restrictions of radius or price prference"
 }
 
 3.error: because there are no qualified destinations after running the recommendation algorithm
-Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior+1231241412+12:08+-73.984345+40.693899+1+1", redirected: false, status: 200, ok: true, …}
+Response {type: "cors", url:  "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&100&1", redirected: false, status: 200, ok: true, …}
 body: (...)
 bodyUsed: true
 headers: Headers {}
@@ -283,7 +283,7 @@ body:{
 2. Send users' feedback about the recommended restaurants
 
 ```
-@app.route('/feedback:<user_profile>+<user_id>+<local_time>+<restaurant_id>+<recommendation_time>+<reward>',methods=['GET'])
+@app.route('/feedback:<user_profile>&<user_id>&<local_time>&<restaurant_id>&<recommendation_time>&<reward>',methods=['GET'])
 def feedback(user_profile, user_id, local_time, restaurant_id, recommendation_time, reward):
 # user_profile: string, eg: 'senior'
 # user_id: string, eg:'123124'
@@ -296,15 +296,15 @@ def feedback(user_profile, user_id, local_time, restaurant_id, recommendation_ti
 
 sample request:
 ```
-"GET /feedback:senior+1231241412+2019-08-07T23:48:57-04:00+B0R-buSLWRbGFWpmqk_WZQ+2019-08-07%2023:44:19+1 HTTP/1.1" 200 -
+"GET /feedback:senior&1231241412&2019-08-07T23:48:57-04:00&B0R-buSLWRbGFWpmqk_WZQ&2019-08-07%2023:44:19&1 HTTP/1.1" 200 -
 
-"GET /feedback:senior+1231241412+2019-08-07T23:48:58-04:00+B0R-buSLWRbGFWpmqk_WZQ+2019-08-07%2023:44:19+-0.1 HTTP/1.1" 200 -
+"GET /feedback:senior&1231241412&2019-08-07T23:48:58-04:00&B0R-buSLWRbGFWpmqk_WZQ&2019-08-07%2023:44:19&-0.1 HTTP/1.1" 200 -
 ```
 sample response:
 
 ```
 1.success 200
-Response {type: "cors", url: "http://localhost:8000/feedback:senior+1231241412+2…00+lQ7H-COT5duZQQ0XqGFPDg+2019-08-08%2000:06:16+1", redirected: false, status: 200, ok: true, …}
+Response {type: "cors", url: "http://localhost:8000/feedback:senior&1231241412&2…00&lQ7H-COT5duZQQ0XqGFPDg&2019-08-08%2000:06:16&1", redirected: false, status: 200, ok: true, …}
 body: ReadableStream
 locked: false
 __proto__: ReadableStream
@@ -315,7 +315,7 @@ redirected: false
 status: 200
 statusText: "OK"
 type: "cors"
-url: "http://localhost:8000/feedback:senior+1231241412+2019-08-08T00:07:31-04:00+lQ7H-COT5duZQQ0XqGFPDg+2019-08-08%2000:06:16+1"
+url: "http://localhost:8000/feedback:senior&1231241412&2019-08-08T00:07:31-04:00&lQ7H-COT5duZQQ0XqGFPDg&2019-08-08%2000:06:16&1"
 __proto__: Response
 
 2.error  500 

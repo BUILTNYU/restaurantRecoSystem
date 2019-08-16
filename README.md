@@ -56,10 +56,9 @@ CREATE TABLE IF NOT EXISTS `UserRating`(
 
 3. Change database setting and connect to database: 
 
-	A. If you want to run this individual file and test the program with terminal, then modify the corresponding part in [main/main.py](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/12fa12d4ec46f4045517532d894e3ae1a49e2240/main/main.py#L280-L287) 
+	A. To change the database of the webservice, modify [main/app.py](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/12fa12d4ec46f4045517532d894e3ae1a49e2240/main/app.py#L18-L24)
 	
-	B. To change the database of the webservice, modify [main/app.py](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/12fa12d4ec46f4045517532d894e3ae1a49e2240/main/app.py#L18-L24)
-
+	B. If you want to run this individual file and test the program with terminal, then modify the corresponding part in [main/main.py](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/12fa12d4ec46f4045517532d894e3ae1a49e2240/main/main.py#L280-L287) 
 	
 4. (Optional)Test if the database is set up correctly(all modifications to the database):
 	
@@ -96,9 +95,10 @@ To install the dependencies, run: `pip install -r requirements.txt`
 
 First, make sure you have started your MySQL database
 
-To start the web services, run under main folder `python app.py`( or `python main.py` locally in your terminal without webservice)
+To start the web services, run under main folder (A) `python app.py`( or (B)`python main.py` locally in your terminal without webservice)
 
 ### 6. Expected output:
+
 
 ### 7. Demo Website (Optional):
 
@@ -106,7 +106,7 @@ To start the web services, run under main folder `python app.py`( or `python mai
 
 2. Change the database setting in the "[/demo/demo.js](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/0b79cc108f2d8b118469dad4ca88513faf9f65c2/demo/demo.js#L5-L11)" file
 
-3. Start your MySQL database and then the API service by running `python app.py` under folder "/main"
+3. Start your MySQL database and then the API service by running `python app.py` under folder "/main" ( Working with (A))
 
 4. Start the demo program by running `nodemon demo.js` unser the folder "/demo"
 

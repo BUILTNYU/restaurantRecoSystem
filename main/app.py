@@ -38,7 +38,7 @@ def default():
     return "Urban Connector"
 
 
-@app.route('/getRecommendation:<user_profile>+<user_id>+<local_time>+<longitude>+<latitude>+<radius>+<price>', methods=['GET'])
+@app.route('/getRecommendation:<user_profile>&<user_id>&<local_time>&<longitude>&<latitude>&<radius>&<price>', methods=['GET'])
 def make_recommendation(user_profile, user_id, local_time, longitude, latitude, radius, price):
     longitude = float(longitude)
     latitude = float(latitude)
@@ -46,7 +46,7 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
     price = int(price)
     return main.make_recommendation(user_profile, user_id, local_time, longitude, latitude, radius, price, __ALPHA__, conn)
 
-@app.route('/feedback:<user_profile>+<user_id>+<local_time>+<restaurant_id>+<recommendation_time>+<reward>',methods=['GET'])
+@app.route('/feedback:<user_profile>&<user_id>&<local_time>&<restaurant_id>&<recommendation_time>&<reward>',methods=['GET'])
 def feedback(user_profile, user_id, local_time, restaurant_id, recommendation_time, reward):
     # reward = int(reward)
     reward = float(reward)

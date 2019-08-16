@@ -35,7 +35,7 @@ function addZero(i) {
 function like(event,user_id,restaurant_id,recommendation_time){
 
   const local_time = getCurrentISOtime()
-  var url = `http://localhost:8000/feedback:senior+${user_id}+${local_time}+${restaurant_id}+${recommendation_time}+1`
+  var url = `http://localhost:8000/feedback:senior&${user_id}&${local_time}&${restaurant_id}&${recommendation_time}&1`
 
   fetch(url,{mode: 'cors',headers:{'Access-Control-Allow-Origin':'*' }})
     .then(function(response){
@@ -46,7 +46,7 @@ function like(event,user_id,restaurant_id,recommendation_time){
 }
 function disLike(event,user_id,restaurant_id,recommendation_time){
   const local_time = getCurrentISOtime()
-  var url = `http://localhost:8000/feedback:senior+${user_id}+${local_time}+${restaurant_id}+${recommendation_time}+-0.1`
+  var url = `http://localhost:8000/feedback:senior&${user_id}&${local_time}&${restaurant_id}&${recommendation_time}&-0.1`
 
   fetch(url,{method:"GET",mode:'cors',headers:{'Access-Control-Allow-Origin':'*' }})
     .then(function(response){
@@ -90,8 +90,9 @@ function getRecommendation(){
     const price = document.getElementById("price").value;
 
     const local_time = getCurrentISOtime()
+    console.log("local_time",local_time)
 
-    var url = `http://localhost:8000/getRecommendation:senior+${user_id}+${local_time}+${longitude}+${latitude}+${radius}+${price}`
+    var url = `http://localhost:8000/getRecommendation:senior&${user_id}&${local_time}&${longitude}&${latitude}&${radius}&${price}`
 
     fetch(url,{method:"GET"})
       .then(function(response){

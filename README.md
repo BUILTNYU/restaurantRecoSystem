@@ -98,6 +98,20 @@ First, make sure you have started your MySQL database
 
 To start the web services, run under main folder `python app.py`( or `python main.py` locally in your terminal without webservice)
 
+### 6. Expected output:
+
+### 7.Demo Website (Optional):
+
+1. Under folder "/demo/", run `npm install`
+
+2. Change the database setting in the "[/demo/demo.js](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/0b79cc108f2d8b118469dad4ca88513faf9f65c2/demo/demo.js#L5-L11)" file
+
+3. Start your MySQL database and then the API service by running `python app.py` under folder "/main"
+
+4. Start the demo program by running `nodemon demo.js` unser the folder "/demo"
+
+5. Enter "localhost:3000" in you browser.
+
 
 ## Descriptions
 ### 1. Preprocessing:
@@ -323,17 +337,5 @@ __proto__: Response
 2.error  500 
  printed line: "Try to insert a record, but doesn't conform to the foreign key policy"
 ```
-
-## Demo Website
-
-1. Under folder "/demo/", run `npm install`
-
-2. Change the database setting in the "[/demo/demo.js](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/0b79cc108f2d8b118469dad4ca88513faf9f65c2/demo/demo.js#L5-L11)" file
-
-3. Start your MySQL database and then the API service by running `python app.py` under folder "/main"
-
-4. Start the demo program by running `nodemon demo.js` unser the folder "/demo"
-
-5. Enter "localhost:3000" in you browser.
 
 

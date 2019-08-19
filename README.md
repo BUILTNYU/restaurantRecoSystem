@@ -1,11 +1,17 @@
 ## Background 
 
-Contextual bandit algorithm makes use of context and user information to make personalized recommendation from dynamically changings pool of candidates. It sequentially selects destinations for users and receives feedback to adjust its selection strategy, which both exploiting and exploring their preferences. We implemented the LinUCB algorithm proposed by Li(2010) to implement the restaurant recommendation algorithm.
+Contextual bandit algorithm makes use of context and user information to make personalized recommendation from dynamically changings pool of candidates. It sequentially selects destinations for users and receives feedback to adjust its selection strategy, which both exploiting and exploring their preferences. We implemented the LinUCB algorithm proposed by Li(2010) to realize restaurant recommendation.
 
 ## SETUP
 ### 1. Notice:
 
 1. Please keep of positive word array in "preprocessing/pca_model_training.py", "preprocessing/data_stimulation.py/", "main/featureExtraction.py" consistent
+
+2. Difference between `main/app.py` and `main/main.py`:
+
+	A. The file `main/main.py`contains major functions used for making restaurant recommendation. In the `if __name__=="__main__"`part, there is a small program that integrated all the major functions to make a simple interactive recommender system running in terminal. Each time, three recommendations will be made, and you have to choose one that you like by entering its restaurant id. This small program aims to provide you with an intuitive feeling of how the algorithm works, and it can also help you check whether you set up correctly without running the web services. 
+
+	B. The file `main/app.py` imports the functions in `main/main.py` file and make the restaurant recommendation program a public web service. If you run `python app.py`, you can access the service by sending request conformed to the format in section 2 bulletin point3. 
 
 ### 2. Configuration File:
 
@@ -99,6 +105,9 @@ To start the web services, run under main folder (A) `python app.py`( or (B)`pyt
 
 ### 6. Expected output:
 
+A. The expected output for  `main/main.py` is three restaurant recommendations 
+
+B. Please refer to section 2 bulletin 3 for detailed explanation about the output format
 
 ### 7. Demo Website (Optional):
 

@@ -137,34 +137,3 @@ if __name__ == "__main__":
         z.append(average)
     plt.plot(x, y, "b",x,z,"r",label = 'cumulative click-through-rate')
     plt.show()
-
-
-
-    # #average click through rate
-    # test_set_sampled = test_set[:1]
-    # # test_set_sampled = sample(test_set,50)
-    # A, b, prediction = linUCB(None, None, train_set, test_set_sampled, 0.01, context_size)
-    # x = []#iternation 
-    # y = []#total click/ total prediction
-    # z = []#standard
-    # for i in range(1,len(test_set)-size,size):
-    #     click_num = 0
-    #     click_den = 0
-    #     for j in range(i,i+size):
-    #         reward = 0
-    #         if prediction in likedRestaurants:
-    #             click_num += 1
-    #             reward = 1
-    #         click_den += 1
-    #         # make sure it doesn't appear before, otherwise it might always recommend the one it recommended before
-    #         test_set_sampled = test_set[j:j+1]
-    #         # print(test_set_sampled)
-    #         context = id2context[prediction]
-    #         result = [reward,prediction,context]
-    #         A, b, prediction = linUCB(A, b, [result], test_set_sampled, 0.01, context_size) #it's learning 
-    #     x.append(i/size)
-    #     y.append(click_num/click_den)
-    #     z.append(average)
-    # plt.plot(x, y, "b",x,z,"r",label = 'average click-through-rate')
-    # plt.show()
-    

@@ -280,7 +280,7 @@ if __name__ == "__main__":
     import pymysql.cursors
      
     conn = pymysql.connect(host='host',
-                        port = 'port,
+                        port = 'port',
                         user='root',
                         password='root',
                         db='UrbanConnector',

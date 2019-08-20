@@ -15,7 +15,6 @@ from __future__ import print_function
 import json
 import time
 import pickle
-import pymysql.cursors
 import datetime
 
 #import api key
@@ -278,6 +277,7 @@ def update_reward(user_profile, user_id, local_time, restaurant_id, recommendati
 
 
 if __name__ == "__main__":
+    import pymysql.cursors
      
     conn = pymysql.connect(host='host',
                         port = 'port,

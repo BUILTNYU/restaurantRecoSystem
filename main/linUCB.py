@@ -1,5 +1,4 @@
 import numpy as np 
-import matplotlib.pylab as plt
 import pickle
 from random import sample 
 from collections import Counter 
@@ -60,6 +59,7 @@ def linUCB(A, b, history, candidate_pool, alpha, context_size):
     return A, b, prediction_ids
 
 if __name__ == "__main__":
+    import matplotlib.pylab as plt
     print("Program starts...")
     # how many training data 
     # 1000 means to use the first 1000 records to train the model

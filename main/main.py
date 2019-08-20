@@ -212,11 +212,9 @@ def make_recommendation(user_profile, user_id, local_time, longitude, latitude, 
                 """------database modification------"""
                 # first: update the database for all recommendations  
                 # this has to be made ealier than the second one, because there are the primary key 
-                print("fixme",query0%(user_id,each,CURRENT_TIME,context,local_time))
                 cursor.execute(query0,(user_id,each,CURRENT_TIME,context,local_time))
 
                 # update the database for the past 7 days storage
-                print("fixme",query1%(user_id,each,CURRENT_TIME))
                 cursor.execute(query1,(user_id,each,CURRENT_TIME))
                 
                 # they have to use the same user_id,each, current_time because they are key and are referencing each other
@@ -248,15 +246,14 @@ def update_reward(user_profile, user_id, local_time, restaurant_id, recommendati
     # try: 
     """------database modification------"""
     query = "SELECT context FROM AllRecommendations where user_id = %s and restaurant_id = %s and recommendation_time = %s"
-    print("fixme",query%(user_id, restaurant_id, recommendation_time))
     cursor.execute(query, (user_id, restaurant_id, recommendation_time))
     a = cursor.fetchone()
+    print(a)
     context = json.loads(a["context"])
 
     #store this feedback to UserRating
     query = "INSERT INTO UserRating(user_id,restaurant_id,recommendation_time,user_selection_time,reward) VALUES(%s,%s,%s,CURRENT_TIMESTAMP,%s)"
     cursor.execute(query, (user_id, restaurant_id, recommendation_time, reward))
-    print("fixme",query%(user_id, restaurant_id, recommendation_time,reward))
     conn.commit()
     """------database modification------"""
 
@@ -305,7 +302,7 @@ if __name__ == "__main__":
     while CONTINUE:
         output = make_recommendation("senior", DEFAULT_USER_ID, LOCAL_TIME, DEFAULT_LONGITUDE, DEFAULT_LATITUDE, DEFAULT_RADIUS, DEFAULT_PRICE, ALPHA, conn)
         print(output)
-        answer = input("Please give your choice(END means to terminate the program):\n")
+        answer = input("Please give your choice(the id of the restaurant;END means to terminate the program):\n")
 
         if answer == "END":
             CONTINUE = False #end the program

@@ -1,11 +1,17 @@
 ## Background 
 
-Contextual bandit algorithm makes use of context and user information to make personalized recommendation from dynamically changings pool of candidates. It sequentially selects destinations for users and receives feedback to adjust its selection strategy, which both exploiting and exploring their preferences. We implemented the LinUCB algorithm proposed by Li(2010) to implement the restaurant recommendation algorithm.
+Contextual bandit algorithm makes use of context and user information to make personalized recommendation from dynamically changings pool of candidates. It sequentially selects destinations for users and receives feedback to adjust its selection strategy, which both exploiting and exploring their preferences. We implemented the LinUCB algorithm proposed by Li(2010) to realize restaurant recommendation.
 
 ## SETUP
 ### 1. Notice:
 
 1. Please keep of positive word array in "preprocessing/pca_model_training.py", "preprocessing/data_stimulation.py/", "main/featureExtraction.py" consistent
+
+2. Difference between `main/app.py` and `main/main.py`:
+
+	A. The file `main/main.py`contains major functions used for making restaurant recommendation. In the `if __name__=="__main__"`part, there is a small program that integrated all the major functions to make a simple interactive recommender system running in terminal. Each time, three recommendations will be made, and you have to choose one that you like by entering its restaurant id. This small program aims to provide you with an intuitive feeling of how the algorithm works, and it can also help you check whether you set up correctly without running the web services. 
+
+	B. The file `main/app.py` imports the functions in `main/main.py` file and make the restaurant recommendation program a public web service. If you run `python app.py`, you can access the service by sending request conformed to the format in [section Descriptions -point3 (Two main services)]. 
 
 ### 2. Configuration File:
 
@@ -56,10 +62,9 @@ CREATE TABLE IF NOT EXISTS `UserRating`(
 
 3. Change database setting and connect to database: 
 
-	A. If you want to run this individual file and test the program with terminal, then modify the corresponding part in [main/main.py](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/12fa12d4ec46f4045517532d894e3ae1a49e2240/main/main.py#L280-L287) 
+	A. To change the database of the webservice, modify [main/app.py](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/12fa12d4ec46f4045517532d894e3ae1a49e2240/main/app.py#L18-L24)
 	
-	B. To change the database of the webservice, modify [main/app.py](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/12fa12d4ec46f4045517532d894e3ae1a49e2240/main/app.py#L18-L24)
-
+	B. If you want to run this individual file and test the program with terminal, then modify the corresponding part in [main/main.py](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/12fa12d4ec46f4045517532d894e3ae1a49e2240/main/main.py#L280-L287) 
 	
 4. (Optional)Test if the database is set up correctly(all modifications to the database):
 	
@@ -94,7 +99,27 @@ To install the dependencies, run: `pip install -r requirements.txt`
 
 ### 5. Start the Program:
 
-To start the web services, run under main folder `python app.py`
+First, make sure you have started your MySQL database
+
+To start the web services, run under main folder (A) `python app.py`( or (B)`python main.py` locally in your terminal without webservice)
+
+### 6. Expected output:
+
+A. The expected output for  `main/main.py` is three restaurant recommendations 
+
+B. Please refer to [section Descriptions - bulletin 3.Two main services] for detailed explanation about the output format. Note that if you don't have customer data in the database, you cannot test the feedback part.
+
+### 7. Demo Website (Optional):
+
+1. Under folder "/demo/", run `npm install`
+
+2. Change the database setting in the "[/demo/demo.js](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/0b79cc108f2d8b118469dad4ca88513faf9f65c2/demo/demo.js#L5-L11)" file
+
+3. Start your MySQL database and then the API service by running `python app.py` under folder "/main" ( Working with (A))
+
+4. Start the demo program by running `nodemon demo.js` unser the folder "/demo"
+
+5. Enter "localhost:3000" in you browser.
 
 
 ## Descriptions
@@ -132,7 +157,7 @@ you can run it directly to see results of an offline evaluation
 1. Get recommendations -> return three restaurants(sometimes less than 3 options because there are not enough restaurants)
 
 ```
-@app.route('/getRecommendation:<user_profile>+<user_id>+<local_time>+<longitude>+<latitude>+<radius>+<price>', methods=['GET'])
+@app.route('/getRecommendation:<user_profile>&<user_id>&<local_time>&<longitude>&<latitude>&<radius>&<price>', methods=['GET'])
 def getRecommendation(user_profile, user_id, time, longitude, latitude, radius, price):
 # user_profile: string, eg: 'senior'
 # user_id: string, eg:'123124'
@@ -145,12 +170,12 @@ def getRecommendation(user_profile, user_id, time, longitude, latitude, radius, 
 
 sample request:
 ```
-"GET /getRecommendation:senior+1231241412+2019-08-07T23:44:16-04:00+-73.984345+40.693899+2000+1 HTTP/1.1" 200 -
+"GET /getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&2000&1 HTTP/1.1" 200 -
 ```
 sample response:
 ```
 1. success: retrieve three restaurants(sometimes is there is not enough restaurants, maybe only 1 or 2)
-Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior+1231241412+12:06+-73.984345+40.693899+500+1", redirected: false, status: 200, ok: true, …}
+Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&2000&1", redirected: false, status: 200, ok: true, …}
 bodyUsed: true
 headers: Headers {}
 ok: true
@@ -158,7 +183,7 @@ redirected: false
 status: 200
 statusText: "OK"
 type: "cors"
-url: "http://localhost:8000/getRecommendation:senior+1231241412+12:06+-73.984345+40.693899+500+1"
+url: "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&2000&1"
 body:{
     "success": [
       {
@@ -247,7 +272,7 @@ body:{
   }
   
 2.error: because the distance or price restriction is too tight, none of the restaurants satisfy the requirements in Yelp API
-Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior+1231241412+12:08+-73.984345+40.693899+1+1", redirected: false, status: 200, ok: true, …}
+Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&1&1", redirected: false, status: 200, ok: true, …}
 body: (...)
 bodyUsed: true
 headers: Headers {}
@@ -256,13 +281,13 @@ redirected: false
 status: 200
 statusText: "OK"
 type: "cors"
-url: "http://localhost:8000/getRecommendation:senior+1231241412+12:08+-73.984345+40.693899+1+1"
+url:  "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&1&1"
 body:{
 "error": "please relax restrictions of radius or price prference"
 }
 
 3.error: because there are no qualified destinations after running the recommendation algorithm
-Response {type: "cors", url: "http://localhost:8000/getRecommendation:senior+1231241412+12:08+-73.984345+40.693899+1+1", redirected: false, status: 200, ok: true, …}
+Response {type: "cors", url:  "http://localhost:8000/getRecommendation:senior&1231241412&2019-08-07T23:44:16-04:00&-73.984345&40.693899&100&1", redirected: false, status: 200, ok: true, …}
 body: (...)
 bodyUsed: true
 headers: Headers {}
@@ -283,7 +308,7 @@ body:{
 2. Send users' feedback about the recommended restaurants
 
 ```
-@app.route('/feedback:<user_profile>+<user_id>+<local_time>+<restaurant_id>+<recommendation_time>+<reward>',methods=['GET'])
+@app.route('/feedback:<user_profile>&<user_id>&<local_time>&<restaurant_id>&<recommendation_time>&<reward>',methods=['GET'])
 def feedback(user_profile, user_id, local_time, restaurant_id, recommendation_time, reward):
 # user_profile: string, eg: 'senior'
 # user_id: string, eg:'123124'
@@ -296,15 +321,15 @@ def feedback(user_profile, user_id, local_time, restaurant_id, recommendation_ti
 
 sample request:
 ```
-"GET /feedback:senior+1231241412+2019-08-07T23:48:57-04:00+B0R-buSLWRbGFWpmqk_WZQ+2019-08-07%2023:44:19+1 HTTP/1.1" 200 -
+"GET /feedback:senior&1231241412&2019-08-07T23:48:57-04:00&B0R-buSLWRbGFWpmqk_WZQ&2019-08-07%2023:44:19&1 HTTP/1.1" 200 -
 
-"GET /feedback:senior+1231241412+2019-08-07T23:48:58-04:00+B0R-buSLWRbGFWpmqk_WZQ+2019-08-07%2023:44:19+-0.1 HTTP/1.1" 200 -
+"GET /feedback:senior&1231241412&2019-08-07T23:48:58-04:00&B0R-buSLWRbGFWpmqk_WZQ&2019-08-07%2023:44:19&-0.1 HTTP/1.1" 200 -
 ```
 sample response:
 
 ```
 1.success 200
-Response {type: "cors", url: "http://localhost:8000/feedback:senior+1231241412+2…00+lQ7H-COT5duZQQ0XqGFPDg+2019-08-08%2000:06:16+1", redirected: false, status: 200, ok: true, …}
+Response {type: "cors", url: "http://localhost:8000/feedback:senior&1231241412&2…00&lQ7H-COT5duZQQ0XqGFPDg&2019-08-08%2000:06:16&1", redirected: false, status: 200, ok: true, …}
 body: ReadableStream
 locked: false
 __proto__: ReadableStream
@@ -315,21 +340,11 @@ redirected: false
 status: 200
 statusText: "OK"
 type: "cors"
-url: "http://localhost:8000/feedback:senior+1231241412+2019-08-08T00:07:31-04:00+lQ7H-COT5duZQQ0XqGFPDg+2019-08-08%2000:06:16+1"
+url: "http://localhost:8000/feedback:senior&1231241412&2019-08-08T00:07:31-04:00&lQ7H-COT5duZQQ0XqGFPDg&2019-08-08%2000:06:16&1"
 __proto__: Response
 
 2.error  500 
  printed line: "Try to insert a record, but doesn't conform to the foreign key policy"
 ```
-
-## Demo Website
-
-1. Under folder "/demo/", run `npm install`
-
-2. Change the database setting in the "[/demo/demo.js](https://github.com/Alicia1529/Recommender-system-development-and-deployment-for-elderly-mobility-in-NYC/blob/0b79cc108f2d8b118469dad4ca88513faf9f65c2/demo/demo.js#L5-L11)" file
-
-2. Start the program by running `nodemon demo.js` unser the folder "/demo"
-
-3. Enter "localhost:3000" in you browser.
 
 

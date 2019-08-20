@@ -11,7 +11,7 @@ Contextual bandit algorithm makes use of context and user information to make pe
 
 	A. The file `main/main.py`contains major functions used for making restaurant recommendation. In the `if __name__=="__main__"`part, there is a small program that integrated all the major functions to make a simple interactive recommender system running in terminal. Each time, three recommendations will be made, and you have to choose one that you like by entering its restaurant id. This small program aims to provide you with an intuitive feeling of how the algorithm works, and it can also help you check whether you set up correctly without running the web services. 
 
-	B. The file `main/app.py` imports the functions in `main/main.py` file and make the restaurant recommendation program a public web service. If you run `python app.py`, you can access the service by sending request conformed to the format in section 2 bulletin point3. 
+	B. The file `main/app.py` imports the functions in `main/main.py` file and make the restaurant recommendation program a public web service. If you run `python app.py`, you can access the service by sending request conformed to the format in [section Descriptions -point3 (Two main services)]. 
 
 ### 2. Configuration File:
 
@@ -107,7 +107,7 @@ To start the web services, run under main folder (A) `python app.py`( or (B)`pyt
 
 A. The expected output for  `main/main.py` is three restaurant recommendations 
 
-B. Please refer to section 2 bulletin 3 for detailed explanation about the output format
+B. Please refer to [section Descriptions - bulletin 3.Two main services] for detailed explanation about the output format. Note that if you don't have customer data in the database, you cannot test the feedback part.
 
 ### 7. Demo Website (Optional):
 

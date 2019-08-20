@@ -282,8 +282,8 @@ def update_reward(user_profile, user_id, local_time, restaurant_id, recommendati
 
 if __name__ == "__main__":
      
-    conn = pymysql.connect(host='localhost',
-                        port = 8889,
+    conn = pymysql.connect(host='35.222.8.195',
+                        port = 3306,
                         user='root',
                         password='root',
                         db='UrbanConnector',

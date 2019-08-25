@@ -4,10 +4,10 @@ import pickle
 from sklearn.decomposition import PCA
 import gc
 import os 
-dir_path = os.path.dirname(os.path.realpath(__file__))
 
-__directory_path__ = ""
-__model_path__ = __directory_path__  + "pca_model.sav"
+dir_path = os.path.dirname(os.path.realpath(__file__))
+__model_path__ = dir_path + "/" + "pca_model.sav"
+
 
 positive = ['acaibowls', 'afghani', 'african','arabian', 'arcades', 'argentine',
     'armenian',  'asianfusion', 'australian', 'austrian', 'bagels', 'bakeries',

@@ -18,9 +18,7 @@ Contextual bandit algorithm makes use of context and user information to make pe
 1. Please create one python file under main folder `main/config.py` with Yelp API information([Yelp Fusion API](https://www.yelp.com/developers/documentation/v3))
 
 ```
-api_key = <your api key>
-client_id = <your client id>
-app_name = <the name of your app>
+api_keys = [<your api key1>, <your api key2>, <your api key3>]
 ```
 2. Remove all current data files under `main/model/`(they are user matrices and will be generated again according to your training input)/ Create one if it doesn't exist
 
